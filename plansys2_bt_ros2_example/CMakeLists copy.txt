@@ -15,9 +15,7 @@ find_package(plansys2_planner REQUIRED)
 find_package(plansys2_problem_expert REQUIRED)
 find_package(plansys2_pddl_parser REQUIRED)
 find_package(ament_index_cpp REQUIRED)
-#find_package(plansys2_bt_actions REQUIRED)
-find_package(plansys2_bt REQUIRED)
-find_package(behaviortree_cpp REQUIRED) # Needed?
+find_package(plansys2_bt_actions REQUIRED)
 find_package(behaviortree_ros2 REQUIRED)
 find_package(btcpp_ros2_interfaces REQUIRED)
 
@@ -38,77 +36,56 @@ set(dependencies
     plansys2_problem_expert
     plansys2_pddl_parser
     ament_index_cpp
-    #plansys2_bt_actions
-    plansys2_bt
-    behaviortree_cpp # Needed?
+    plansys2_bt_actions
     behaviortree_ros2
     btcpp_ros2_interfaces
 )
 
 include_directories(include)
 
-# Recharge Behavior Tree Node
 add_library(plansys2_recharge_bt_ros2_node SHARED src/behavior_tree_nodes/Recharge.cpp)
-ament_target_dependencies(plansys2_recharge_bt_ros2_node ${dependencies})
-target_compile_definitions(plansys2_recharge_bt_ros2_node PRIVATE BT_PLUGIN_EXPORT)
+list(APPEND plugin_libs plansys2_recharge_bt_ros2_node)
 
-# Close Gripper Behavior Tree Node
 add_library(plansys2_close_gripper_bt_ros2_node SHARED src/behavior_tree_nodes/CloseGripper.cpp)
-ament_target_dependencies(plansys2_close_gripper_bt_ros2_node ${dependencies})
-target_compile_definitions(plansys2_close_gripper_bt_ros2_node PRIVATE BT_PLUGIN_EXPORT)
+list(APPEND plugin_libs plansys2_close_gripper_bt_ros2_node)
 
-# Open Gripper Behavior Tree Node
 add_library(plansys2_open_gripper_bt_ros2_node SHARED src/behavior_tree_nodes/OpenGripper.cpp)
-ament_target_dependencies(plansys2_open_gripper_bt_ros2_node ${dependencies})
-target_compile_definitions(plansys2_open_gripper_bt_ros2_node PRIVATE BT_PLUGIN_EXPORT)
+list(APPEND plugin_libs plansys2_open_gripper_bt_ros2_node)
 
-# Move Behavior Tree Node
 add_library(plansys2_move_bt_ros2_node SHARED src/behavior_tree_nodes/Move.cpp)
-ament_target_dependencies(plansys2_move_bt_ros2_node ${dependencies})
-target_compile_definitions(plansys2_move_bt_ros2_node PRIVATE BT_PLUGIN_EXPORT)
+list(APPEND plugin_libs plansys2_move_bt_ros2_node)
 
-# Sleep Behavior Tree Node
 add_library(plansys2_sleep_bt_ros2_node SHARED src/behavior_tree_nodes/Sleep.cpp)
-ament_target_dependencies(plansys2_sleep_bt_ros2_node ${dependencies})
-target_compile_definitions(plansys2_sleep_bt_ros2_node PRIVATE BT_PLUGIN_EXPORT)
+list(APPEND plugin_libs plansys2_sleep_bt_ros2_node)
 
-# Approach Object Behavior Tree Node
 add_library(plansys2_approach_object_bt_ros2_node SHARED src/behavior_tree_nodes/ApproachObject.cpp)
-ament_target_dependencies(plansys2_approach_object_bt_ros2_node ${dependencies})
-target_compile_definitions(plansys2_approach_object_bt_ros2_node PRIVATE BT_PLUGIN_EXPORT)
+list(APPEND plugin_libs plansys2_approach_object_bt_ros2_node)
 
-# Assemble Action Node
+foreach(bt_plugin ${plugin_libs})
+  ament_target_dependencies(${bt_plugin} ${dependencies})
+  target_compile_definitions(${bt_plugin} PRIVATE BT_PLUGIN_EXPORT)
+endforeach()
+
 add_executable(assemble_action_node src/assemble_action_node.cpp)
 ament_target_dependencies(assemble_action_node ${dependencies})
 
-# Assemble Controller Node
 add_executable(assemble_controller_node src/assemble_controller_node.cpp)
 ament_target_dependencies(assemble_controller_node ${dependencies})
 
-# Nav2 Sim Node
 add_executable(nav2_sim_node src/nav2_sim_node.cpp)
 ament_target_dependencies(nav2_sim_node ${dependencies})
 
-# Installation of directories
 install(DIRECTORY launch pddl behavior_trees_xml config DESTINATION share/${PROJECT_NAME})
 
-# Installation of targets
 install(TARGETS
   assemble_action_node
   assemble_controller_node
   nav2_sim_node
-  plansys2_recharge_bt_ros2_node
-  plansys2_close_gripper_bt_ros2_node
-  plansys2_open_gripper_bt_ros2_node
-  plansys2_move_bt_ros2_node
-  plansys2_sleep_bt_ros2_node
-  plansys2_approach_object_bt_ros2_node
+  ${plugin_libs}
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION lib/${PROJECT_NAME}
 )
-
-install(DIRECTORY include  DESTINATION include) # Installation of header files (needed?)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -117,9 +94,6 @@ if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)
 endif()
 
-# ament_export_libraries(${dependencies}) # Export libraries (needed?
-
-ament_export_include_directories(include) # Export dependencies (needed?)
 ament_export_dependencies(${dependencies})
 
 ament_package()
