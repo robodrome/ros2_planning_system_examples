@@ -119,12 +119,12 @@
 
     (:durative-action sleep_service
         :parameters (?r - robot)
-        :duration (= ?duration 5) ;; Assuming the sleep duration is 5 time units
+        :duration (= ?duration 5)
         :condition (at start (robot_available ?r))
         :effect (and
-            (at start (not (robot_available ?r))) ;; Robot becomes unavailable at the start
-            (at end (robot_available ?r)) ;; Robot becomes available again at the end
-            (at end (robot_slept ?r)) ;; Indicate the robot has slept
+            (at start (not (robot_available ?r)))
+            (at end (robot_available ?r))
+            (at end (robot_slept ?r))
         )
     )
 

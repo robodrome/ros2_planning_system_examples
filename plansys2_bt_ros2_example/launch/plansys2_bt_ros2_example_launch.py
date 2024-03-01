@@ -159,6 +159,7 @@ def generate_launch_description():
         namespace=namespace,
         output='screen',
         parameters=[])   # Create the launch description and populate
+
     recharge_1_cmd = Node(
         package='plansys2_bt',
         executable='bt_action_node',
@@ -198,6 +199,7 @@ def generate_launch_description():
             'bt_xml_file': example_dir + '/behavior_trees_xml/recharge.xml'
           }
         ])
+
     sleep_service_1_cmd = Node(
         package='plansys2_bt',
         executable='bt_action_node',

@@ -35,12 +35,12 @@ void SleepAction::onHalt()
 
 }  // namespace plansys2_bt_tests
 
-#include "behaviortree_cpp/bt_factory.h"
-#include "behaviortree_ros2/plugins.hpp"
-CreateRosNodePlugin(plansys2_bt_tests::SleepAction, "SleepAction");
-
 // #include "behaviortree_cpp/bt_factory.h"
-// BT_REGISTER_NODES(factory)
-// {
-//   factory.registerNodeType<plansys2_bt_tests::SleepAction>("SleepAction");
-// }
+// #include "behaviortree_ros2/plugins.hpp"
+// CreateRosNodePlugin(plansys2_bt_tests::SleepAction, "SleepAction");
+
+#include "behaviortree_cpp/bt_factory.h"
+BT_REGISTER_NODES(factory)
+{
+  factory.registerNodeType<plansys2_bt_tests::SleepAction>("SleepAction");
+}
