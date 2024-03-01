@@ -117,7 +117,7 @@
         )
     )
 
-    (:durative-action sleep
+    (:durative-action sleep_service
         :parameters (?r - robot)
         :duration (= ?duration 5) ;; Assuming the sleep duration is 5 time units
         :condition (at start (robot_available ?r))

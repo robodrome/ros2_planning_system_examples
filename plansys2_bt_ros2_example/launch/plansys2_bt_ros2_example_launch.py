@@ -198,43 +198,43 @@ def generate_launch_description():
             'bt_xml_file': example_dir + '/behavior_trees_xml/recharge.xml'
           }
         ])
-    sleep_1_cmd = Node(
+    sleep_service_1_cmd = Node(
         package='plansys2_bt',
         executable='bt_action_node',
-        name='sleep_1',
+        name='sleep_service_1',
         namespace=namespace,
         output='screen',
         parameters=[
           example_dir + '/config/params.yaml',
           {
-            'action_name': 'sleep',
-            'bt_xml_file': example_dir + '/behavior_trees_xml/sleep.xml'
+            'action_name': 'sleep_service',
+            'bt_xml_file': example_dir + '/behavior_trees_xml/sleep_service.xml'
           }
         ])
-    sleep_2_cmd = Node(
+    sleep_service_2_cmd = Node(
         package='plansys2_bt',
         executable='bt_action_node',
-        name='sleep_2',
+        name='sleep_service_2',
         namespace=namespace,
         output='screen',
         parameters=[
           example_dir + '/config/params.yaml',
           {
-            'action_name': 'sleep',
-            'bt_xml_file': example_dir + '/behavior_trees_xml/sleep.xml'
+            'action_name': 'sleep_service',
+            'bt_xml_file': example_dir + '/behavior_trees_xml/sleep_service.xml'
           }
         ])
-    sleep_3_cmd = Node(
+    sleep_service_3_cmd = Node(
         package='plansys2_bt',
         executable='bt_action_node',
-        name='sleep_3',
+        name='sleep_service_3',
         namespace=namespace,
         output='screen',
         parameters=[
           example_dir + '/config/params.yaml',
           {
-            'action_name': 'sleep',
-            'bt_xml_file': example_dir + '/behavior_trees_xml/sleep.xml'
+            'action_name': 'sleep_service',
+            'bt_xml_file': example_dir + '/behavior_trees_xml/sleep_service.xml'
           }
         ])
 
@@ -258,8 +258,8 @@ def generate_launch_description():
     ld.add_action(recharge_1_cmd)
     ld.add_action(recharge_2_cmd)
     ld.add_action(recharge_3_cmd)
-    ld.add_action(sleep_1_cmd)
-    ld.add_action(sleep_2_cmd)
-    ld.add_action(sleep_3_cmd)
+    ld.add_action(sleep_service_1_cmd)
+    ld.add_action(sleep_service_2_cmd)
+    ld.add_action(sleep_service_3_cmd)
 
     return ld

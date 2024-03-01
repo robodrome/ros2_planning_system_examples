@@ -85,15 +85,15 @@ recharge_3:
   ros__parameters:
     plugins:
       - plansys2_recharge_bt_ros2_node
-sleep_1:
+sleep_service_1:
   ros__parameters:
     plugins:
       - plansys2_sleep_bt_ros2_node
-sleep_2:
+sleep_service_2:
   ros__parameters:
     plugins:
       - plansys2_sleep_bt_ros2_node
-sleep_3:
+sleep_service_3:
   ros__parameters:
     plugins:
       - plansys2_sleep_bt_ros2_node
