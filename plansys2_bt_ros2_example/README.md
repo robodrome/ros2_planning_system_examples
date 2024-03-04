@@ -1,6 +1,8 @@
-# PlanSys2 Behavior Tree Example
+# PlanSys2 Behavior Tree ROS2 Example
 
 ## Description
+
+Note that this example is nearly identical to `plansys2_bt_example`. Main difference is that this version also uses the standard method of registering ROS2 nodes, services and topics as implemented by the package named [`behaviortree_ros2`](https://github.com/BehaviorTree/BehaviorTree.ROS2).
 
 This example shows how to use Behavior Trees to carry out the tasks that an action requires. Each action has an xml file that defines a behavior tree.
 - In `src` the actions are implemented.
@@ -31,10 +33,12 @@ This launches Navigation2. Use rviz to set the robot position, as shown here:
 
 Or use the commandline (e.g. in terminal 2):
 ```bash
-ros2 topic pub --once /initialpose geometry_msgs/msg/PoseWithCovarianceStamped "{header: {stamp: {sec: 0, nanosec: 0}, frame_id: 'map'}, pose:{pose: {position: {x: -2.0, y: -0.5, z: 0.01}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}}}"
+ros2 topic pub --times 3 /initialpose geometry_msgs/msg/PoseWithCovarianceStamped "{header: {stamp: {sec: 0, nanosec: 0}, frame_id: 'map'}, pose:{pose: {position: {x: -2.0, y: -0.5, z: 0.01}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}}}"
 ```
 
 ### In terminal 2:
+
+Make sure the package [`behaviortree_ros2`](https://github.com/BehaviorTree/BehaviorTree.ROS2) is installed. 
 
 ```bash
 source install/setup.bash
@@ -42,7 +46,6 @@ ros2 launch plansys2_bt_ros2_example plansys2_bt_ros2_example_launch.py
 ```
 
 ### In terminal 3:
-
 There are two options in this example. First option is to use the plansys2 terminal. Secondly you can use the custom assemble controller. Both options are shown below.
 
 ```bash
@@ -72,7 +75,7 @@ set predicate (is_recharge_zone recharge_zone)
 set predicate (piece_at wheel_1 wheels_zone)
 set predicate (piece_at body_car_1 body_car_zone)
 set predicate (piece_at steering_wheel_1 steering_wheels_zone)
-set goal (and(piece_at wheel_1 assembly_zone))
+set goal (and(piece_at wheel_1 assembly_zone)(robot_slept r2d2))
 run
 ```
 You can also paste the problem above into a file (e.g. problem.txt), start the plansys2_terminal and enter the following:
@@ -87,16 +90,3 @@ source install/setup.bash
 $HOME/dev_ws/build/plansys2_bt_ros2_example/assemble_controller_node
 ```
 NOTE: this problem domain is different from example entered in the plansys2 terminal.
-
-### In terminal 4 (optional):
-
-NOTE: this is not working right now due to the upgrade to BT.CPP v4
-
-To monitor the behaviortree in Groot, type the following to connect it to the plansys2 executor:
-```bash
-$HOME/dev_ws/build/groot/Groot --mode monitor --publisher_port 2666 --server_port 2667 --autoconnect
-```
-
-NOTE: best way is to run commands above just after you have followed the instructions as mentioned in `In terminal 3`.
-
-![groot](groot.png)

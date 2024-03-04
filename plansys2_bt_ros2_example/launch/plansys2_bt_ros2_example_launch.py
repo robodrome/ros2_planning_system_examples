@@ -43,6 +43,15 @@ def generate_launch_description():
           'namespace': namespace
           }.items())
 
+    # Define the sleep_server node
+    sleep_server_cmd = Node(
+        package='btcpp_ros2_samples',
+        executable='sleep_server',
+        name='sleep_server',
+        namespace=namespace,
+        output='screen',
+        parameters=[])
+
     # Specify the actions
     move_1_cmd = Node(
         package='plansys2_bt',
@@ -247,6 +256,8 @@ def generate_launch_description():
 
     # Declare the launch options
     ld.add_action(plansys2_cmd)
+
+    ld.add_action(sleep_server_cmd)
 
     ld.add_action(move_1_cmd)
     ld.add_action(move_2_cmd)

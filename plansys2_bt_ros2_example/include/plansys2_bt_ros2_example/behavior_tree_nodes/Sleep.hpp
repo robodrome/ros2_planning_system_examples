@@ -19,7 +19,7 @@
 #include "btcpp_ros2_interfaces/action/sleep.hpp"
 #include "behaviortree_cpp/behavior_tree.h"
 
-namespace plansys2_bt_tests
+namespace plansys2_bt_ros2_example
 {
 
 class SleepAction : public BT::RosActionNode<btcpp_ros2_interfaces::action::Sleep>
@@ -42,10 +42,12 @@ public:
   void onHalt() override;
 
   BT::NodeStatus onResultReceived(const WrappedResult & wr) override;
+  
+  BT::NodeStatus onFeedback(const std::shared_ptr<const Feedback> feedback) override;
 
   virtual BT::NodeStatus onFailure(BT::ActionNodeErrorCode error) override;
 };
 
-}  // namespace plansys2_bt_tests
+}  // namespace plansys2_bt_ros2_example
 
 #endif  // plansys2_bt_ros2_example__BEHAVIOR_TREE_NODES__SLEEP_HPP_

@@ -1,6 +1,6 @@
 #include "plansys2_bt_ros2_example/behavior_tree_nodes/Sleep.hpp"
 
-namespace plansys2_bt_tests
+namespace plansys2_bt_ros2_example
 {
 
 bool SleepAction::setGoal(RosActionNode::Goal & goal)
@@ -27,20 +27,21 @@ BT::NodeStatus SleepAction::onFailure(BT::ActionNodeErrorCode error)
   return BT::NodeStatus::FAILURE;
 }
 
+BT::NodeStatus SleepAction::onFeedback(const std::shared_ptr<const Feedback> feedback)
+{
+  RCLCPP_INFO(
+    node_->get_logger(), "Cycle = %d", feedback->cycle);
+  return BT::NodeStatus::RUNNING;
+}
+
 void SleepAction::onHalt()
 {
   RCLCPP_INFO(node_->get_logger(), "%s: onHalt", name().c_str() );
 }
 
 
-}  // namespace plansys2_bt_tests
+}  // namespace plansys2_bt_ros2_example
 
 #include "behaviortree_cpp/bt_factory.h"
 #include "behaviortree_ros2/plugins.hpp"
-CreateRosNodePlugin(plansys2_bt_tests::SleepAction, "SleepAction");
-
-// #include "behaviortree_cpp/bt_factory.h"
-// BT_REGISTER_NODES(factory)
-// {
-//   factory.registerNodeType<plansys2_bt_tests::SleepAction>("SleepAction");
-// }
+CreateRosNodePlugin(plansys2_bt_ros2_example::SleepAction, "SleepAction");
