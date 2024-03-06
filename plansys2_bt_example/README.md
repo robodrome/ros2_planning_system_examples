@@ -31,10 +31,12 @@ This launches Navigation2. Use rviz to set the robot position, as shown here:
 
 Or use the commandline (e.g. in terminal 2):
 ```bash
-ros2 topic pub --once /initialpose geometry_msgs/msg/PoseWithCovarianceStamped "{header: {stamp: {sec: 0, nanosec: 0}, frame_id: 'map'}, pose:{pose: {position: {x: -2.0, y: -0.5, z: 0.01}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}}}"
+ros2 topic pub --times 3 /initialpose geometry_msgs/msg/PoseWithCovarianceStamped "{header: {stamp: {sec: 0, nanosec: 0}, frame_id: 'map'}, pose:{pose: {position: {x: -2.0, y: -0.5, z: 0.01}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}}}"
 ```
 
 ### In terminal 2:
+
+Make sure the package [`behaviortree_ros2`](https://github.com/BehaviorTree/BehaviorTree.ROS2) is installed.
 
 ```bash
 source install/setup.bash
@@ -72,7 +74,7 @@ set predicate (is_recharge_zone recharge_zone)
 set predicate (piece_at wheel_1 wheels_zone)
 set predicate (piece_at body_car_1 body_car_zone)
 set predicate (piece_at steering_wheel_1 steering_wheels_zone)
-set goal (and(piece_at wheel_1 assembly_zone))
+set goal (and(piece_at wheel_1 assembly_zone)(robot_slept r2d2))
 run
 ```
 You can also paste the problem above into a file (e.g. problem.txt), start the plansys2_terminal and enter the following:
@@ -88,7 +90,7 @@ $HOME/dev_ws/build/plansys2_bt_example/assemble_controller_node
 ```
 NOTE: this problem domain is different from example entered in the plansys2 terminal.
 
-### In terminal 4 (optional):
+### In terminal 4 (obsolete):
 
 NOTE: this is not working right now due to the upgrade to BT.CPP v4
 

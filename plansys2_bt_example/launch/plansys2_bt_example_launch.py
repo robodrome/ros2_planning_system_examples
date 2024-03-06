@@ -43,6 +43,15 @@ def generate_launch_description():
           'namespace': namespace
           }.items())
 
+    # Define the sleep_server node
+    sleep_server_cmd = Node(
+        package='btcpp_ros2_samples',
+        executable='sleep_server',
+        name='sleep_server',
+        namespace=namespace,
+        output='screen',
+        parameters=[])
+
     # Specify the actions
     move_1_cmd = Node(
         package='plansys2_bt_actions',
@@ -107,6 +116,7 @@ def generate_launch_description():
             'bt_xml_file': example_dir + '/behavior_trees_xml/transport.xml'
           }
         ])
+
     transport_2_cmd = Node(
         package='plansys2_bt_actions',
         executable='bt_action_node',
@@ -122,6 +132,7 @@ def generate_launch_description():
             'bt_xml_file': example_dir + '/behavior_trees_xml/transport.xml'
           }
         ])
+
     transport_3_cmd = Node(
         package='plansys2_bt_actions',
         executable='bt_action_node',
@@ -144,21 +155,23 @@ def generate_launch_description():
         name='assemble_1',
         namespace=namespace,
         output='screen',
-        parameters=[])   # Create the launch description and populate
+        parameters=[])
+
     assemble_2_cmd = Node(
         package='plansys2_bt_example',
         executable='assemble_action_node',
         name='assemble_2',
         namespace=namespace,
         output='screen',
-        parameters=[])   # Create the launch description and populate
+        parameters=[])
+
     assemble_3_cmd = Node(
         package='plansys2_bt_example',
         executable='assemble_action_node',
         name='assemble_3',
         namespace=namespace,
         output='screen',
-        parameters=[])   # Create the launch description and populate
+        parameters=[])
 
     recharge_1_cmd = Node(
         package='plansys2_bt_actions',
@@ -174,12 +187,85 @@ def generate_launch_description():
           }
         ])
 
+    recharge_2_cmd = Node(
+        package='plansys2_bt_actions',
+        executable='bt_action_node',
+        name='recharge_2',
+        namespace=namespace,
+        output='screen',
+        parameters=[
+          example_dir + '/config/params.yaml',
+          {
+            'action_name': 'recharge',
+            'bt_xml_file': example_dir + '/behavior_trees_xml/recharge.xml'
+          }
+        ])
+
+    recharge_3_cmd = Node(
+        package='plansys2_bt_actions',
+        executable='bt_action_node',
+        name='recharge_3',
+        namespace=namespace,
+        output='screen',
+        parameters=[
+          example_dir + '/config/params.yaml',
+          {
+            'action_name': 'recharge',
+            'bt_xml_file': example_dir + '/behavior_trees_xml/recharge.xml'
+          }
+        ])
+
+    sleep_service_1_cmd = Node(
+        package='plansys2_bt_actions',
+        executable='bt_action_node',
+        name='sleep_service_1',
+        namespace=namespace,
+        output='screen',
+        parameters=[
+          example_dir + '/config/params.yaml',
+          {
+            'action_name': 'sleep_service',
+            'bt_xml_file': example_dir + '/behavior_trees_xml/sleep_service.xml'
+          }
+        ])
+
+    sleep_service_2_cmd = Node(
+        package='plansys2_bt_actions',
+        executable='bt_action_node',
+        name='sleep_service_2',
+        namespace=namespace,
+        output='screen',
+        parameters=[
+          example_dir + '/config/params.yaml',
+          {
+            'action_name': 'sleep_service',
+            'bt_xml_file': example_dir + '/behavior_trees_xml/sleep_service.xml'
+          }
+        ])
+
+    sleep_service_3_cmd = Node(
+        package='plansys2_bt_actions',
+        executable='bt_action_node',
+        name='sleep_service_3',
+        namespace=namespace,
+        output='screen',
+        parameters=[
+          example_dir + '/config/params.yaml',
+          {
+            'action_name': 'sleep_service',
+            'bt_xml_file': example_dir + '/behavior_trees_xml/sleep_service.xml'
+          }
+        ])
+
+
     ld = LaunchDescription()
 
     ld.add_action(declare_namespace_cmd)
 
     # Declare the launch options
     ld.add_action(plansys2_cmd)
+
+    ld.add_action(sleep_server_cmd)
 
     ld.add_action(move_1_cmd)
     ld.add_action(move_2_cmd)
@@ -191,5 +277,10 @@ def generate_launch_description():
     ld.add_action(assemble_2_cmd)
     ld.add_action(assemble_3_cmd)
     ld.add_action(recharge_1_cmd)
+    ld.add_action(recharge_2_cmd)
+    ld.add_action(recharge_3_cmd)
+    ld.add_action(sleep_service_1_cmd)
+    ld.add_action(sleep_service_2_cmd)
+    ld.add_action(sleep_service_3_cmd)
 
     return ld

@@ -144,7 +144,7 @@ public:
 
     problem_expert_->setGoal(
       plansys2::Goal(
-        "(and(car_assembled car_1) (car_assembled car_2) (car_assembled car_3))"));
+        "(and(car_assembled car_1) (car_assembled car_2) (car_assembled car_3) (robot_slept r2d2) (robot_slept c3po) (robot_slept bb8))"));
   }
 
   void step()

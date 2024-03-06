@@ -16,6 +16,9 @@ find_package(plansys2_problem_expert REQUIRED)
 find_package(plansys2_pddl_parser REQUIRED)
 find_package(ament_index_cpp REQUIRED)
 find_package(plansys2_bt_actions REQUIRED)
+find_package(behaviortree_cpp REQUIRED)
+find_package(behaviortree_ros2 REQUIRED)
+find_package(btcpp_ros2_interfaces REQUIRED)
 
 if(NOT CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 17)
@@ -35,6 +38,9 @@ set(dependencies
     plansys2_pddl_parser
     ament_index_cpp
     plansys2_bt_actions
+    behaviortree_cpp
+    behaviortree_ros2
+    btcpp_ros2_interfaces
 )
 
 include_directories(include)
@@ -53,6 +59,9 @@ list(APPEND plugin_libs plansys2_move_bt_node)
 
 add_library(plansys2_approach_object_bt_node SHARED src/behavior_tree_nodes/ApproachObject.cpp)
 list(APPEND plugin_libs plansys2_approach_object_bt_node)
+
+add_library(plansys2_sleep_bt_node SHARED src/behavior_tree_nodes/Sleep.cpp)
+list(APPEND plugin_libs plansys2_sleep_bt_node)
 
 foreach(bt_plugin ${plugin_libs})
   ament_target_dependencies(${bt_plugin} ${dependencies})
